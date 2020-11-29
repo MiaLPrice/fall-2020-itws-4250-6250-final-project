@@ -1,0 +1,53 @@
+DROP TABLE IF EXISTS covid;
+DROP TABLE IF EXISTS restuarants;
+DROP TABLE IF EXISTS restareas;
+DROP TABLE IF EXISTS counties;
+DROP TABLE IF EXISTS trails;
+
+CREATE TABLE covid (
+    updateDate date,
+    county varchar(255),
+    testsPerformeted INT,
+    newPostives INT,
+    Primary key (county, updateDate)
+);
+
+CREATE TABLE restuarants {
+    restuarantName varchar(255),
+    restuarantAddress varchar(255),
+    city varchar(255),
+    zipCode INT,
+    county varchar(255),
+    latitude float,
+    longitude float,
+    located_at GEOGRAPHY,  -- will have to update once filled
+    Primary Key (restuarantAddress, zipCode)
+};
+
+CREATE TABLE restareas {
+    TPID varchar(7), -- should be the key 
+    areaName varchar(255),
+    latitude float,
+    longitude float,
+    located_at GEOGRAPHY -- will have to update once filled 
+    Primary Key (TPID)
+};
+
+CREATE TABLE counties {
+    county varchar(255),
+    countGeom POLYGON,
+    Primary Key (county)
+};
+
+CREATE TABLE county {
+    county varchar(255),
+    countGeom POLYGON,
+    Primary Key (county)
+};
+
+CREATE TABLE trails {
+    artificialKey INT NOT NULL,
+    trailName varchar(255),
+    trailGeom POLYGON,
+    Primary Key (artificialKey)
+}
