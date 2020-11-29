@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS covid;
 DROP TABLE IF EXISTS restuarants;
+DROP TABLE IF EXISTS inspections;
 DROP TABLE IF EXISTS restareas;
 DROP TABLE IF EXISTS counties;
 DROP TABLE IF EXISTS trails;
@@ -13,6 +14,7 @@ CREATE TABLE covid (
 );
 
 CREATE TABLE restuarants {
+    restuarantID int, -- artificial key
     restuarantName varchar(255),
     restuarantAddress varchar(255),
     city varchar(255),
@@ -21,8 +23,17 @@ CREATE TABLE restuarants {
     latitude float,
     longitude float,
     located_at GEOGRAPHY,  -- will have to update once filled
-    Primary Key (restuarantAddress, zipCode)
+    Primary Key (restuarantID)
 };
+
+CREATE TABLE inspections {
+    restuarantID int, 
+    InspectionDate timestamp,
+    critViolations int,
+    nonCritViolations int,
+    Primary Key (restuarantID)
+};
+
 
 CREATE TABLE restareas {
     TPID varchar(7), -- should be the key 
