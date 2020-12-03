@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS final-project;
-CREATE DATABASE final-project;
+DROP DATABASE IF EXISTS finalproject;
+CREATE DATABASE finalproject;

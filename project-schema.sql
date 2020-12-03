@@ -13,8 +13,7 @@ CREATE TABLE covid (
     Primary key (county, updateDate)
 );
 
-CREATE TABLE restuarants {
-    restuarantID int, -- artificial key
+CREATE TABLE restuarants (
     restuarantName varchar(255),
     restuarantAddress varchar(255),
     city varchar(255),
@@ -24,41 +23,35 @@ CREATE TABLE restuarants {
     longitude float,
     located_at GEOGRAPHY,  -- will have to update once filled
     Primary Key (restuarantID)
-};
+);
 
-CREATE TABLE inspections {
+CREATE TABLE inspections 
     restuarantID int, 
     InspectionDate timestamp,
     critViolations int,
     nonCritViolations int,
     Primary Key (restuarantID)
-};
+);
 
 
-CREATE TABLE restareas {
+CREATE TABLE restareas (
     TPID varchar(7), -- should be the key 
     areaName varchar(255),
     latitude float,
     longitude float,
     located_at GEOGRAPHY -- will have to update once filled 
     Primary Key (TPID)
-};
+);
 
-CREATE TABLE counties {
+CREATE TABLE counties (
     county varchar(255),
     countGeom POLYGON,
     Primary Key (county)
-};
+);
 
-CREATE TABLE county {
-    county varchar(255),
-    countGeom POLYGON,
-    Primary Key (county)
-};
-
-CREATE TABLE trails {
+CREATE TABLE trails (
     artificialKey INT NOT NULL,
     trailName varchar(255),
     trailGeom POLYGON,
     Primary Key (artificialKey)
-}
+);

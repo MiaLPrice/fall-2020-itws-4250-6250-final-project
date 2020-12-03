@@ -2,24 +2,56 @@
 import pandas as pd
 import json
 import requests
- 
-# Call API to pull data
-# url = 'https://health.data.ny.gov/resource/xdss-u53e.json' #covid data
-# url = 'https://health.data.ny.gov/resource/cnih-y5dw.json' #restaurant data
-# url = 'https://data.ny.gov/resource/7gkb-pzs9.json' #trails data
-url = 'https://data.ny.gov/resource/mj5h-8ei4.json' #rest areas
-response = requests.get(url = url)
-response_data = response.json()
+import psycopg2
+from sodapy import Socrata
+import sys
+import re
 
-#connect to DB
-# connection_string = "host='%s' dbname='final_project' user='postgres' password='postgres'" % (host,)
-# conn = psycopg2.connect(connection_string, cursor_factory=psycopg2.extras.DictCursor)
+'''
+    table                 done
+    restuarants            
+    covid                 
+    restuarants            
+    restareas             
+    counties              
+    trails
+'''
 
-#insert into DB
-for record in response_data:
-    print(json.dumps(record))
-#     cursor.execute("Insert Into Ticket_Info values ?", json.dumps(record))
-#     cursor.commit()
-    
-# conn.close()
-# connection_string.close()
+try:
+    conn = psycopg2.connect("dbname = 'finalproject' user = 'postgres' password='password' host = 'localhost'")
+except psycopg2.DatabaseError:
+    print('I am unable to connect the database')
+    sys.exit(1)
+
+
+with conn.cursor() as cursor:
+    setup_queries = open('project-schema.sql', 'r').read()
+    cursor.execute(setup_queries)
+    conn.commit()
+
+# Parking/Rest Areas  
+client = Socrata("data.ny.gov", None)
+results = client.get("mj5h-8ei4", limit=2000)
+
+results_df = pd.DataFrame.from_records(results)
+
+print(results_df)
+'''
+# Trails 
+results = client.get("7gkb-pzs9", limit=2000)
+
+# Convert to pandas DataFrame
+results_df = pd.DataFrame.from_records(results)
+
+# Covid 
+client = Socrata("health.data.ny.gov", None)
+results = client.get("xdss-u53e", limit=2000)
+
+results_df = pd.DataFrame.from_records(results)
+
+# restuarants 
+resultcs = client.get("cnih-y5dw", limit=2000)
+
+results_df = pd.DataFrame.from_records(results)
+
+'''
