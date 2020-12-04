@@ -23,6 +23,7 @@ except psycopg2.DatabaseError:
     print('I am unable to connect the database')
     sys.exit(1)
 
+
 with conn.cursor() as cursor:
     setup_queries = open('project-schema.sql', 'r').read()
     cursor.execute(setup_queries)
