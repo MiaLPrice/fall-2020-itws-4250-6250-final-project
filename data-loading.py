@@ -10,7 +10,7 @@ import re
 '''
     table                 done
     restuarants            
-    covid                 
+    covid                   x          
     restuarants            
     restareas                            
     counties              
@@ -85,10 +85,37 @@ with conn.cursor() as cursor:
         conn.commit() 
 
 # restuarants 
-results = client.get("cnih-y5dw", limit=2000)
+'''
+'facility', 'address', 'date', 'violations', 'total_critical_violations', 'total_crit_not_corrected', 'total_noncritical_violations', 
+'description', 'local_health_department', 'county', 'facility_address', 'city', 'zip_code', 'nysdoh_gazetteer_1980', 'municipality', 
+'operation_name', 'permit_expiration_date', 'permitted_corp_name', 'perm_operator_last_name', 'perm_operator_first_name', 
+'nys_health_operation_id',  'inspection_type', 'inspection_comments', 'food_service_facility_state', 'location1', 
+'''
+
+results = client.get("cnih-y5dw", limit=30000)
 
 results_df = pd.DataFrame.from_records(results)
+results_df['total_critical_violations'].fillna(0, inplace=True)
+results_df['total_crit_not_corrected'].fillna(0, inplace=True)
 lenResults = len(results_df)
-print(results_df)
 
+with conn.cursor() as cursor:
+    for i in range(0, lenResults): 
+        query = """INSERT INTO restuarants VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+        
+        latitude = results_df['location1'][i]['latitude']
+        longitude = results_df['location1'][i]['longitude']
+     
+        record = (i, results_df['facility'][i], results_df['address'][i], results_df['city'][i], results_df['zip_code'][i], results_df['county'][i], latitude, longitude)
+        cursor.execute(query, record)
+        conn.commit()
 
+with conn.cursor() as cursor:
+    for i in range(0, lenResults): 
+        query = """INSERT INTO inspections VALUES (%s, %s, %s, %s)"""
+        record = (i, results_df['date'][i], results_df['total_critical_violations'][i], results_df['total_crit_not_corrected'][i])
+
+        cursor.execute(query, record)
+        conn.commit()
+
+print("Hi Auntie")

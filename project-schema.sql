@@ -19,7 +19,7 @@ CREATE TABLE restuarants (
     restuarantName varchar(255),
     restuarantAddress varchar(255),
     city varchar(255),
-    zipCode INT,
+    zipCode varchar(10),
     county varchar(255),
     latitude float,
     longitude float,
@@ -55,5 +55,6 @@ CREATE TABLE trails (
     artificialKey INT NOT NULL,
     trailName varchar(255),
     trailGeom POLYGON,
+    trailLength decimal,
     Primary Key (artificialKey)
 );
