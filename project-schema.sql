@@ -40,7 +40,7 @@ CREATE TABLE restareas (
     latitude float,
     longitude float,
     located_at GEOGRAPHY -- will have to update once filled 
-    Primary Key (TPID)
+    Primary Key (TPID)       -- This data has same TPIDs. Need to change the primary key. TPID+areaName might work
 );
 
 CREATE TABLE counties (
