@@ -1,2 +1,4 @@
 DROP DATABASE IF EXISTS finalproject;
 CREATE DATABASE finalproject;
+
+CREATE EXTENSION Postgis;

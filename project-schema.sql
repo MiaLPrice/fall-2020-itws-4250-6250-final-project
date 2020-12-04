@@ -1,3 +1,4 @@
+create extension if not exists postgis;
 DROP TABLE IF EXISTS covid;
 DROP TABLE IF EXISTS restuarants;
 DROP TABLE IF EXISTS inspections;
@@ -14,6 +15,7 @@ CREATE TABLE covid (
 );
 
 CREATE TABLE restuarants (
+    restuarantID INT,
     restuarantName varchar(255),
     restuarantAddress varchar(255),
     city varchar(255),
@@ -25,7 +27,7 @@ CREATE TABLE restuarants (
     Primary Key (restuarantID)
 );
 
-CREATE TABLE inspections 
+CREATE TABLE inspections (
     restuarantID int, 
     InspectionDate timestamp,
     critViolations int,
@@ -35,11 +37,11 @@ CREATE TABLE inspections
 
 
 CREATE TABLE restareas (
-    TPID varchar(7), -- should be the key 
+    TPID varchar(10), -- should be the key 
     areaName varchar(255),
     latitude float,
     longitude float,
-    located_at GEOGRAPHY -- will have to update once filled 
+    located_at GEOGRAPHY, -- will have to update once filled 
     Primary Key (TPID)
 );
 
