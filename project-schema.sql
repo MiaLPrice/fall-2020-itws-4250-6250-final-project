@@ -1,4 +1,4 @@
-create extension if not exists postgis;
+CREATE EXTENSION IF NOT EXISTS postgis;
 DROP TABLE IF EXISTS covid;
 DROP TABLE IF EXISTS restuarants;
 DROP TABLE IF EXISTS inspections;
@@ -18,9 +18,7 @@ CREATE TABLE restuarants (
     restuarantID INT,
     restuarantName varchar(255),
     restuarantAddress varchar(255),
-    city varchar(255),
     zipCode varchar(10),
-    county varchar(255),
     latitude float,
     longitude float,
     located_at GEOGRAPHY,  -- will have to update once filled
@@ -51,10 +49,18 @@ CREATE TABLE counties (
     Primary Key (county)
 );
 
+CREATE TABLE cities (
+	city varchar(255),
+    zipCode varchar(10),
+    county varchar(255),
+	PRIMARY KEY (zipcode)
+);
+
 CREATE TABLE trails (
     artificialKey INT NOT NULL,
     trailName varchar(255),
-    trailGeom POLYGON,
+    latitude float,
+    longitude float,
     trailLength decimal,
     Primary Key (artificialKey)
 );
