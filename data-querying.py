@@ -5,6 +5,8 @@ import sys
 import re
 import streamlit as st
 import pydeck as pdk
+import xml.etree.ElementTree as ET
+
 
 try:
     conn = psycopg2.connect("dbname = 'finalproject' user = 'postgres' password='postgres' host = 'localhost'")
@@ -22,10 +24,16 @@ with conn.cursor() as cursor:
 res_records = pd.DataFrame(res_records, columns = ["latitude","longitude"])
     
 #RestAreas
-with conn.cursor() as cursor:
-    cursor.execute("""SELECT latitude, longitude FROM restareas""")
-    area_records = cursor.fetchall()
-area_records = pd.DataFrame(area_records, columns = ["latitude","longitude"])
+tree = ET.parse('C:\\Users\\admin\\Desktop\\fall-2020-itws-4250-6250-final-project-main\\restareas.xml')
+root = tree.getroot()
+rows = []
+
+for elem in root:
+    latitude = float(elem.find('latitude').text)
+    longitude = float(elem.find('longitude').text)
+    rows.append({"latitude": latitude, "longitude": longitude})
+    
+area_records = pd.DataFrame(rows, columns = ["latitude", "longitude"])
 
 #Trails  
 with conn.cursor() as cursor:
@@ -57,7 +65,6 @@ if st.sidebar.checkbox("Show map of NY state"):
         layers.append(restuarants)
 
     st.pydeck_chart(pdk.Deck(map_style='mapbox://styles/mapbox/light-v9', initial_view_state = viewport, layers = layers))
-
 
 #Queries to do
 #Restaurants with most violations

@@ -33,15 +33,6 @@ CREATE TABLE inspections (
     Primary Key (restuarantID)
 );
 
-CREATE TABLE restareas (
-    TPID varchar(10), -- should be the key 
-    areaName varchar(255),
-    latitude float,
-    longitude float,
-    located_at GEOGRAPHY, -- will have to update once filled 
-    Primary Key (TPID)
-);
-
 CREATE TABLE counties (
     county varchar(255),
     countGeom POLYGON,
