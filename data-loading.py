@@ -31,12 +31,10 @@ with conn.cursor() as cursor:
         query = """INSERT INTO restareas VALUES (%s, %s, %s, %s)"""   
         record = (results_df['tp_id'][i], results_df['title'][i], results_df['latitude'][i],results_df['longitude'][i])
         cursor.execute(query, record)
-        conn.commit()
-       
+        conn.commit()    
 
 # Trails 
 # Column Names: the_geom, unit,facility,fac_unq,name,alt_name,asset,asset_unq,colldate,blaze,blaze_2,surface,condition,corridor_w,tread_widt,height,atv,foot,horse,bike,xc,motorv,snowmb,admin,accessible,source,shape_leng,abbrev
-
 
 results = client.get("7gkb-pzs9", limit=9599)
 results_df = pd.DataFrame.from_records(results)
@@ -79,21 +77,24 @@ with conn.cursor() as cursor:
 # operation_name, permit_expiration_date, permitted_corp_name, perm_operator_last_name, perm_operator_first_name, 
 # nys_health_operation_id,  inspection_type, inspection_comments, food_service_facility_state, location1, 
 
-
 results = client.get("cnih-y5dw", limit=30000)
 
 results_df = pd.DataFrame.from_records(results)
 results_df['total_critical_violations'].fillna(0, inplace=True)
 results_df['total_crit_not_corrected'].fillna(0, inplace=True)
+
+pivot = pd.DataFrame(results_df.location1.values.tolist())
+results_df = pd.concat([results_df, pivot], axis=1, sort=False)
+results_df = results_df.drop_duplicates(subset = ["latitude", "longitude", "facility"]).reset_index(drop=True)
+
 lenResults = len(results_df)
 
 with conn.cursor() as cursor:
     for i in range(0, lenResults): 
         query = """INSERT INTO restuarants VALUES (%s, %s, %s, %s, %s, %s)"""        
-        latitude = results_df['location1'][i]['latitude']
-        longitude = results_df['location1'][i]['longitude']
-     
-        record = (i, results_df['facility'][i], results_df['address'][i], results_df['zip_code'][i], latitude, longitude)
+        # latitude = df['location1'][i]['latitude']
+        # longitude = df['location1'][i]['longitude']
+        record = (i, results_df['facility'][i], results_df['address'][i], results_df['zip_code'][i], results_df['latitude'][i], results_df['longitude'][i])
         cursor.execute(query, record)
         conn.commit()
 

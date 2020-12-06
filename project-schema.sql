@@ -22,7 +22,7 @@ CREATE TABLE restuarants (
     latitude float,
     longitude float,
     located_at GEOGRAPHY,  -- will have to update once filled
-    Primary Key (restuarantID)
+    Primary Key (restuarantName,latitude,longitude)
 );
 
 CREATE TABLE inspections (
@@ -32,7 +32,6 @@ CREATE TABLE inspections (
     nonCritViolations int,
     Primary Key (restuarantID)
 );
-
 
 CREATE TABLE restareas (
     TPID varchar(10), -- should be the key 
