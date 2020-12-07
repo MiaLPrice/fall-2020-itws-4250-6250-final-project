@@ -24,8 +24,6 @@ This should launch the application in your local browser
 ## Data Reset ##
 There are two ways of doing this
 
-*Use the **Reset Data** button in application
+-Use the **Reset Data** button in application
 
-*Run `python retreive-data.py` in your command prompt
-
-
+-Run `python retreive-data.py` in your command prompt
