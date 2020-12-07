@@ -3,20 +3,27 @@
 ## Database Setup ##
 Run database-setup.sql file in your command prompt using
 
-`psql master_dbname master_dbuser < database-setup.sql`
+`psql master_dbname master_dbuser < db-setup.sql`
 
-This should setup database finalproject
+This should setup your database **dbms_final_project** with user **dbms_project_user**
 
-## Data Loading ##
+## Loading Data ##
 Run data-loading.py in you command prompt using
 
 `python data-loading.py`
 
-This should load the data into your database as per the project-schema
+This should load the data into your database as per the **schema.sql** file
 
-## Application launch ##
+## Launch Application ##
 Run data-querying in your command prompt using
 
 `streamlit run data-querying.py`
 
 This should launch the application in your local browser
+
+## Data Reset ##
+There are two ways of doing this
+*Use the **Reset Data* button in application
+*Run `python retreive-data.py` in your command prompt
+
+
