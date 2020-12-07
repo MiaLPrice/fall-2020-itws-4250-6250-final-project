@@ -1,0 +1,4 @@
+https://health.data.ny.gov/resource/xdss-u53e.json
+https://health.data.ny.gov/resource/cnih-y5dw.json
+https://data.ny.gov/resource/7gkb-pzs9.json
+https://data.ny.gov/api/views/mj5h-8ei4/rows.xml

@@ -3,17 +3,22 @@ import requests
 import psycopg2
 import sys
 import re
+import os
 import streamlit as st
 import pydeck as pdk
 import xml.etree.ElementTree as ET
 
 try:
-    conn = psycopg2.connect("dbname = 'finalproject' user = 'postgres' password='postgres' host = 'localhost'")
+    conn = psycopg2.connect("dbname = 'dbms_final_project' user = 'dbms_project_user' password='dbms_password' host = 'localhost'")
 except psycopg2.DatabaseError:
     print('I am unable to connect the database')
     sys.exit(1)
 
 st.markdown("# **Welcome to Database Application**")
+
+if st.sidebar.button("Reset Data"):
+    os.system('retrieve-data.py')
+    st.sidebar.success("Data was reset successfully!")
     
 #Restaurants
 with conn.cursor() as cursor:
@@ -158,5 +163,3 @@ if st.sidebar.checkbox("Would you like to add a restaurant?"):
             cursor.execute(query, record)
             conn.commit()
             st.success("Your Restaurant was inserted into the database successfully!")
-
-
