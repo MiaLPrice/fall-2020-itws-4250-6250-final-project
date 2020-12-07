@@ -29,16 +29,11 @@ results_df = pd.DataFrame.from_records(results)
 lenResults = len(results_df)
 
 with conn.cursor() as cursor:
-    for i in range(0, lenResults): 
-        #query = """INSERT INTO trails VALUES (%s, %s, ST_SetSRID(ST_POINT(%s, %s),4326), %s)""" 
-        
+    for i in range(0, lenResults):         
         query = """INSERT INTO trails VALUES (%s, %s, %s, %s, %s)"""
         
         latitude = results_df['the_geom'][i]['coordinates'][0][0][0]
         longitude = results_df['the_geom'][i]['coordinates'][0][0][1]
-        
-        # poly = [(points[0], points[1]) for points in results_df['the_geom'][i]['coordinates'][0]]
-        # print(poly)
         
         record = (i, results_df['name'][i], latitude, longitude, results_df['shape_leng'][i])
         cursor.execute(query, record)
@@ -80,8 +75,6 @@ lenResults = len(results_df)
 with conn.cursor() as cursor:
     for i in range(0, lenResults): 
         query = """INSERT INTO restuarants VALUES (%s, %s, %s, %s, %s, %s)"""        
-        # latitude = df['location1'][i]['latitude']
-        # longitude = df['location1'][i]['longitude']
         record = (i, results_df['facility'][i], results_df['address'][i], results_df['zip_code'][i], results_df['latitude'][i], results_df['longitude'][i])
         cursor.execute(query, record)
         conn.commit()
@@ -99,8 +92,7 @@ with conn.cursor() as cursor:
         query = """INSERT INTO inspections VALUES (%s, %s, %s, %s)"""
         record = (i, results_df['date'][i], results_df['total_critical_violations'][i], results_df['total_crit_not_corrected'][i])
         cursor.execute(query, record)
-        conn.commit()        
-   
+        conn.commit()          
    
 # Parking/Rest Areas XML - Non Relational Database
 # Column Names: title,milepost,route_location,direction,route,icon_anchor,tp_id,latitude,longitude,location 
@@ -109,7 +101,6 @@ items = root.findall('.//row/row')
 rows = ET.Element('rows')
 
 for item in items: 
-    print(item)
     row = ET.SubElement(rows, 'row')
     tp_id = ET.SubElement(row, 'tp_id')
     title = ET.SubElement(row, 'title')

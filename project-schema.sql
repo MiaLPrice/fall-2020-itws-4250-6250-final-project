@@ -2,7 +2,6 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 DROP TABLE IF EXISTS covid;
 DROP TABLE IF EXISTS restuarants;
 DROP TABLE IF EXISTS inspections;
-DROP TABLE IF EXISTS restareas;
 DROP TABLE IF EXISTS counties;
 DROP TABLE IF EXISTS trails;
 
@@ -43,7 +42,7 @@ CREATE TABLE cities (
 	city varchar(255),
     zipCode varchar(10),
     county varchar(255),
-	PRIMARY KEY (zipcode)
+	Primary Key (zipcode)
 );
 
 CREATE TABLE trails (
