@@ -22,7 +22,7 @@ with conn.cursor() as cursor:
 res_records = pd.DataFrame(res_records, columns = ["latitude","longitude"])
     
 #RestAreas
-tree = ET.parse('C:\\Users\\admin\\Desktop\\fall-2020-itws-4250-6250-final-project-main\\restareas.xml')
+tree = ET.parse('restareas.xml')
 root = tree.getroot()
 rows = []
 
